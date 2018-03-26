@@ -153,12 +153,16 @@ defmodule GithubTags.Model.Repository do
   def remove_tag(username, repository_url, tag) do
     repository = get_by_url(username, repository_url)
 
-    case repository.tags do
-      nil ->
-        @repo_not_found
+    if !is_nil(repository) do
+      case repository.tags do
+        nil ->
+          @repo_not_found
 
-      _tags ->
-        remove_tag(repository, tag)
+        _tags ->
+          remove_tag(repository, tag)
+      end
+    else
+      @repo_not_found
     end
   end
 

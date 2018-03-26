@@ -6,7 +6,7 @@ defmodule GithubTags.RepositoryTest do
 
   # This user is from a friend of mine, should be fine to test with it
   @user "fabianopaes"
-  @repo "https://github.com/akullpp/awesome-java"
+  @repo "https://github.com/google/styleguide"
   @tag_string "services"
 
   setup_all do

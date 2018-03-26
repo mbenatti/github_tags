@@ -2,7 +2,7 @@ defmodule GithubTags.UIWeb.RepositoryControllerTest do
   use GithubTags.UIWeb.ConnCase
 
   @user "fabianopaes"
-  @repo "https://github.com/akullpp/awesome-java"
+  @repo "https://github.com/google/styleguide"
   @tag_string "services"
 
   test "GET repositories page", %{conn: conn} do

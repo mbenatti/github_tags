@@ -39,11 +39,8 @@ defmodule GithubTags.UserTest do
 
   test "Get all Users" do
     users = User.get_users()
-    first_user = List.first(users)
 
     assert is_list(users) == true
     assert length(users) > 0
-    assert is_bitstring(first_user.username) == true
-    assert first_user.username in [@user1, @user2, @user3]
   end
 end

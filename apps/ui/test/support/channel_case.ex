@@ -27,10 +27,6 @@ defmodule GithubTags.UIWeb.ChannelCase do
 
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(GithubTags.UI.Repo)
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(GithubTags.UI.Repo, {:shared, self()})
-    end
     :ok
   end
 

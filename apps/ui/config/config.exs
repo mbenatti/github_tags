@@ -5,11 +5,6 @@
 # is restricted to this project.
 use Mix.Config
 
-# General application configuration
-config :ui,
-  namespace: GithubTags.UI,
-  ecto_repos: [GithubTags.UI.Repo]
-
 # Configures the endpoint
 config :ui, GithubTags.UIWeb.Endpoint,
   url: [host: "localhost"],

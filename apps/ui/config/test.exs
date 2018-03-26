@@ -9,11 +9,3 @@ config :ui, GithubTags.UIWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-# Configure your database
-config :ui, GithubTags.UI.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "ui_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox

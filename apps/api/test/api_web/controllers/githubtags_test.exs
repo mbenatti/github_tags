@@ -11,10 +11,9 @@ defmodule GithubTags.APIWeb.GithubtagsControllerTest do
       |> put_req_header("content-type", "application/json")
       |> put_req_header("accept", "application/json")
 
-    {:ok,
-      conn: conn
-    }
+    {:ok, conn: conn}
   end
+
   describe "User creation" do
     test "create user and populate users", %{conn: conn} do
       conn = put(conn, "/api/create_user/#{@user}")
@@ -50,9 +49,11 @@ defmodule GithubTags.APIWeb.GithubtagsControllerTest do
 
     test "add tag", %{conn: conn} do
       conn =
-        post(conn, "/api/repositories/add_tag",
-          %{"user" => @user, "tag" => @tag_string, "url" => @repo}
-        )
+        post(conn, "/api/repositories/add_tag", %{
+          "user" => @user,
+          "tag" => @tag_string,
+          "url" => @repo
+        })
 
       %{"status" => status, "message" => message} = json_response(conn, 200)
 
@@ -63,9 +64,11 @@ defmodule GithubTags.APIWeb.GithubtagsControllerTest do
 
     test "remove tag", %{conn: conn} do
       conn =
-        post(conn, "/api/repositories/remove_tag",
-          %{"user" => @user, "tag" => @tag_string, "url" => @repo}
-        )
+        post(conn, "/api/repositories/remove_tag", %{
+          "user" => @user,
+          "tag" => @tag_string,
+          "url" => @repo
+        })
 
       %{"status" => status, "message" => message} = json_response(conn, 200)
 

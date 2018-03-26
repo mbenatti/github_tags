@@ -1,5 +1,5 @@
 defmodule GithubTags.APIWeb.GithubtagsController do
-  @moduledoc"""
+  @moduledoc """
   Module to handle with API routes
   """
   use GithubTags.APIWeb, :controller
@@ -73,10 +73,11 @@ defmodule GithubTags.APIWeb.GithubtagsController do
       {"status":200,"result":[{"user":"mbenatti","url":"https://github.com/2trde/excrawl","updated_at":"2018-03-26T03:01:55.738564","tags":["tag2","elixir"],"name":"excrawl","language":"Elixir","inserted_at":"2018-03-26T03:01:13.962738","id":168,"description":"Elixir web crawler"}]}
   """
   def add_tag(conn, %{"user" => username, "url" => url, "tag" => tag}) do
-    message = case Repository.add_tag_by_url(username, url, tag) do
-      "repository not found" -> "repository not found"
-      {:ok, _repo} -> "Tag added"
-    end
+    message =
+      case Repository.add_tag_by_url(username, url, tag) do
+        "repository not found" -> "repository not found"
+        {:ok, _repo} -> "Tag added"
+      end
 
     json(conn, %{status: 200, message: message})
   end
@@ -97,10 +98,11 @@ defmodule GithubTags.APIWeb.GithubtagsController do
       {"status":200,"message":"repository not found"}
   """
   def remove_tag(conn, %{"user" => username, "url" => url, "tag" => tag}) do
-    message = case Repository.remove_tag(username, url, tag) do
-      "repository not found" -> "repository not found"
-      {:ok, _repo} -> "Tag removed"
-    end
+    message =
+      case Repository.remove_tag(username, url, tag) do
+        "repository not found" -> "repository not found"
+        {:ok, _repo} -> "Tag removed"
+      end
 
     json(conn, %{status: 200, message: message})
   end
@@ -108,7 +110,8 @@ defmodule GithubTags.APIWeb.GithubtagsController do
   defp sanitize_map(map) when is_map(map) do
     Map.drop(map, [:__meta__, :__struct__, :user_username, :repositories])
   end
+
   defp sanitize_map(list) when is_list(list) do
-    Enum.map(list, &(sanitize_map(&1)))
+    Enum.map(list, &sanitize_map(&1))
   end
 end

@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row index">
+    <div class="col-lg-12">
+      <h4>Get Repositories:</h4>
+      <%= form_for @conn, user_path(@conn, :repos), [as: :user], fn f -> %>
+        github.com/ <%= text_input f, :username %>
+
+        <%= submit "Get repositories" %>
+      <% end %>
+    </div>
+
+    <div class="col-lg-12 index">
+      <h4>Or select an User:</h4>
+      <table class="table">
+        <tbody>
+          <%= for user <- @users do %>
+            <tr>
+              <td><%= link("#{user.username}", to: "/repositories?username=#{user.username}")  %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

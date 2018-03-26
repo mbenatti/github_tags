@@ -1,1 +1,25 @@
 /* This file is for your main application css. */
+
+body {
+  background-color: whitesmoke !important;
+  font-family: monospace !important;
+}
+
+.header-app {
+  padding-left: 50px !important;
+  padding-bottom: 10px !important;
+}
+
+.index {
+  padding-top: 100px;
+  text-align: center;
+}
+
+.repo {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.tag-input {
+  width: 130px;
+}

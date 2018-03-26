@@ -16,7 +16,12 @@ defmodule GithubTags.UIWeb.Router do
   scope "/", GithubTags.UIWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", UserController, :index
+    post "/repos", UserController, :repos
+
+    get "/repositories", RepositoryController, :index
+    post "/add_tag", RepositoryController, :add_tag
+    post "/remove_tag", RepositoryController, :remove_tag
   end
 
   # Other scopes may use custom stacks.

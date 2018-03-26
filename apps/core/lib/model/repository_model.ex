@@ -28,7 +28,8 @@ defmodule GithubTags.Model.Repository do
         @user_not_found
 
       _user ->
-        github_request(username)
+        username
+        |> github_request()
         |> Task.async_stream(fn repository ->
           add_or_update(username, %{
             "name" => repository["name"],
@@ -135,13 +136,13 @@ defmodule GithubTags.Model.Repository do
         |> Repo.update()
 
       tags ->
-        if !Enum.member?(tags, tag) do
+        if Enum.member?(tags, tag) do
+          {:ok, repository}
+        else
           repository
           |> change()
           |> put_change(:tags, [tag | tags])
           |> Repo.update()
-        else
-          {:ok, repository}
         end
     end
   end
@@ -153,7 +154,9 @@ defmodule GithubTags.Model.Repository do
   def remove_tag(username, repository_url, tag) do
     repository = get_by_url(username, repository_url)
 
-    if !is_nil(repository) do
+    if is_nil(repository) do
+      @repo_not_found
+    else
       case repository.tags do
         nil ->
           @repo_not_found
@@ -161,8 +164,6 @@ defmodule GithubTags.Model.Repository do
         _tags ->
           remove_tag(repository, tag)
       end
-    else
-      @repo_not_found
     end
   end
 

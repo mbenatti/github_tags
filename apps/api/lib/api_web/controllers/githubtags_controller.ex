@@ -61,7 +61,7 @@ defmodule GithubTags.APIWeb.GithubtagsController do
   end
 
   @doc """
-  Get a repository by user and tag
+  Add a tag for a repository
 
     params:
       - user: Github Username
@@ -69,8 +69,8 @@ defmodule GithubTags.APIWeb.GithubtagsController do
       - tag: tag to search
 
   ## Examples
-      $ curl -X GET http://localhost:4002/api/repositories/mbenatti/elixir
-      {"status":200,"result":[{"user":"mbenatti","url":"https://github.com/2trde/excrawl","updated_at":"2018-03-26T03:01:55.738564","tags":["tag2","elixir"],"name":"excrawl","language":"Elixir","inserted_at":"2018-03-26T03:01:13.962738","id":168,"description":"Elixir web crawler"}]}
+      $ curl -H "Content-Type: application/json" -X POST -d '{"user":"mbenatti","url":"https://github.com/h4cc/awesome-elixir","tag":"elixir-lang"}' http://localhost:4002/api/repositories/add_tag
+      {"status":200,"message":"Tag added"}
   """
   def add_tag(conn, %{"user" => username, "url" => url, "tag" => tag}) do
     message =
@@ -83,7 +83,7 @@ defmodule GithubTags.APIWeb.GithubtagsController do
   end
 
   @doc """
-  Get a repository by user and tag
+  Remove a tag from a repository
 
     params:
       - user: Github Username

@@ -11,7 +11,10 @@ defmodule GithubTags.UIWeb.RepositoryController do
     render(
       conn,
       "index.html",
-      repositories: Repository.get_by_tag(username, tag) |> Enum.sort_by(& &1.url),
+      repositories:
+        username
+        |> Repository.get_by_tag(tag)
+        |> Enum.sort_by(& &1.url),
       user: username
     )
   end
@@ -20,7 +23,10 @@ defmodule GithubTags.UIWeb.RepositoryController do
     render(
       conn,
       "index.html",
-      repositories: Repository.get_by_user(username) |> Enum.sort_by(& &1.url),
+      repositories:
+        username
+        |> Repository.get_by_user()
+        |> Enum.sort_by(& &1.url),
       user: username
     )
   end

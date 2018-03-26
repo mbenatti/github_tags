@@ -8,17 +8,21 @@ defmodule GithubTags.UIWeb.RepositoryController do
   end
 
   def index(conn, %{"params" => %{"username" => username, "tag" => tag}}) do
-    render conn, "index.html",
-      repositories:
-        Repository.get_by_tag(username, tag) |> Enum.sort_by(&(&1.url)),
+    render(
+      conn,
+      "index.html",
+      repositories: Repository.get_by_tag(username, tag) |> Enum.sort_by(& &1.url),
       user: username
+    )
   end
 
   def index(conn, %{"username" => username}) do
-    render conn, "index.html",
-      repositories:
-        Repository.get_by_user(username) |> Enum.sort_by(&(&1.url)),
+    render(
+      conn,
+      "index.html",
+      repositories: Repository.get_by_user(username) |> Enum.sort_by(& &1.url),
       user: username
+    )
   end
 
   def index(conn, _params) do

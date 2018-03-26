@@ -5,8 +5,7 @@ defmodule GithubTags.UIWeb.UserController do
   alias GithubTags.Model.Repository
 
   def index(conn, _params) do
-    render conn, "index.html",
-      users: User.get_users()
+    render(conn, "index.html", users: User.get_users())
   end
 
   def repos(conn, %{"user" => %{"username" => username}}) do

@@ -4,7 +4,7 @@ defmodule GithubTags.UIWeb.UserControllerTest do
   @user "fabianopaes"
 
   test "GET index /", %{conn: conn} do
-    conn = get conn, "/"
+    conn = get(conn, "/")
 
     assert conn.status == 200
     assert html_response(conn, 200) =~ "Githubstars"
@@ -13,10 +13,8 @@ defmodule GithubTags.UIWeb.UserControllerTest do
   test "submit repo", %{conn: conn} do
     conn =
       post(conn, "/repos", %{
-        "user" =>
-          %{"username" => @user}
-        }
-      )
+        "user" => %{"username" => @user}
+      })
 
     assert redirected_to(conn) == "/repositories?username=fabianopaes"
   end

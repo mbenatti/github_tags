@@ -57,6 +57,11 @@ exports.config = {
   },
 
   npm: {
-    enabled: true
+    enabled: true,
+    globals: { // Bootstrap's JavaScript requires both '$' and 'jQuery' in global scope
+      $: 'jquery',
+      jQuery: 'jquery',
+      bootstrap: 'bootstrap' // Require Bootstrap's JavaScript globally
+    }
   }
 };

@@ -11,7 +11,7 @@ defmodule GithubTags.MixProject do
   end
 
   defp deps do
-    []
+    [{:credo, "~> 0.9.0-rc1", only: [:dev, :test], runtime: false}]
   end
 
   defp aliases do

@@ -1,0 +1,63 @@
+<div class="repo">
+  <h1>User: <%= @user %></h1>
+  <br>
+  <div class="row">
+    <div class="col-lg-12">
+      <%= form_for @conn, repository_path(@conn, :index), [as: :params, method: :get], fn f -> %>
+      <%= text_input f, :tag, placeholder: "tag" %>
+      <%= hidden_input f, :username, value: @user %>
+
+      <%= submit "Get by tag" %>
+      <% end %>
+    </div>
+
+    <div class="col-lg-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Repository</td>
+            <td>Description</td>
+            <td>Language</td>
+            <td>Tags</td>
+            <td>#</td>
+          </tr>
+        </thead>
+        <tbody>
+        <%= for repository <- @repositories do %>
+          <tr>
+            <td><%= link(repository.name, to: repository.url) %></td>
+            <td><%= repository.description %></td>
+            <td><%= repository.language %></td>
+            <td><%= if !is_nil(repository.tags), do: Enum.map(repository.tags, &("#"<>&1)) |> Enum.join(" ") %></td>
+            <td>
+              <a data-toggle="collapse" href="#collapse-<%= repository.name %>" aria-expanded="false" aria-controls="collapse-<%= repository.name %>">
+                Edit
+              </a>
+            </td>
+          </tr>
+          <tr class="collapse" id="collapse-<%= repository.name %>">
+            <td>
+              <%= form_for @conn, repository_path(@conn, :add_tag), [as: :params], fn f -> %>
+                <%= text_input f, :tag, placeholder: "tag", class: "tag-input" %>
+                <%= hidden_input f, :username, value: @user %>
+                <%= hidden_input f, :url, value: repository.url %>
+
+              <%= submit "Add Tag" %>
+              <% end %>
+            </td>
+            <td>
+              <%= form_for @conn, repository_path(@conn, :remove_tag), [as: :params], fn f -> %>
+                <%= text_input f, :tag, placeholder: "tag", class: "tag-input" %>
+                <%= hidden_input f, :username, value: @user %>
+                <%= hidden_input f, :url, value: repository.url %>
+
+                <%= submit "Remove Tag" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

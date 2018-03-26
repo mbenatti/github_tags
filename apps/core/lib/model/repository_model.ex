@@ -1,5 +1,5 @@
 defmodule GithubTags.Model.Repository do
-  @moduledoc"""
+  @moduledoc """
   Helper Module to interact with Repository Schema and Database
   """
 
@@ -21,10 +21,12 @@ defmodule GithubTags.Model.Repository do
       iex()> GithubTags.Model.Repository.populate_or_update_repositories("mbenatti")
       :ok
   """
-  @spec populate_or_update_repositories(String.t) :: :ok
+  @spec populate_or_update_repositories(String.t()) :: :ok
   def populate_or_update_repositories(username) do
     case User.get_user(username) do
-      nil -> @user_not_found
+      nil ->
+        @user_not_found
+
       _user ->
         github_request(username)
         |> Task.async_stream(fn repository ->
@@ -40,25 +42,35 @@ defmodule GithubTags.Model.Repository do
   end
 
   defp github_request(username) do
-    case Tentacat.Users.Starring.starred(username, Tentacat.Client.new) do
+    case Tentacat.Users.Starring.starred(username, Tentacat.Client.new()) do
       {404, _} -> []
       result -> result
     end
   end
 
-  defp add_or_update(username, %{"name" => name, "description" => desc, "language" => lang, "html_url" => url}) do
+  defp add_or_update(username, %{
+         "name" => name,
+         "description" => desc,
+         "language" => lang,
+         "html_url" => url
+       }) do
     case get_by_url(username, url) do
       nil -> %RepositorySchema{user: username}
       repository -> repository
     end
-    |> RepositorySchema.changeset(%{"name" => name, "description" => desc, "language" => lang, "url" => url})
-    |> Repo.insert_or_update
+    |> RepositorySchema.changeset(%{
+      "name" => name,
+      "description" => desc,
+      "language" => lang,
+      "url" => url
+    })
+    |> Repo.insert_or_update()
   end
 
   @doc """
   Get all repositories by username
   """
-  @spec get_by_user(String.t) :: [RepositorySchema.t] | []
+  @spec get_by_user(String.t()) :: [RepositorySchema.t()] | []
   def get_by_user(username) do
     from(r in RepositorySchema, where: r.user == ^username)
     |> Repo.all()
@@ -72,7 +84,7 @@ defmodule GithubTags.Model.Repository do
   @doc """
   Get all existing repositories
   """
-  @spec get_all() :: [RepositorySchema.t] | []
+  @spec get_all() :: [RepositorySchema.t()] | []
   def get_all() do
     Repo.all(RepositorySchema)
   end
@@ -80,7 +92,7 @@ defmodule GithubTags.Model.Repository do
   @doc """
   Get a User repository by url
   """
-  @spec get_by_url(String.t, String.t) :: RepositorySchema.t | nil
+  @spec get_by_url(String.t(), String.t()) :: RepositorySchema.t() | nil
   def get_by_url(username, repository_url) do
     Repo.get_by(RepositorySchema, user: username, url: repository_url)
   end
@@ -88,11 +100,12 @@ defmodule GithubTags.Model.Repository do
   @doc """
   Add a tag
   """
-  @spec add_tag(String.t, Integer.t, String.t) :: String.t | {:ok, RepositorySchema.t}
+  @spec add_tag(String.t(), Integer.t(), String.t()) :: String.t() | {:ok, RepositorySchema.t()}
   def add_tag(username, repository_id, tag) do
     case Repo.get_by(RepositorySchema, user: username, id: repository_id) do
       nil ->
         @repo_not_found
+
       repository ->
         add_tag(repository, tag)
     end
@@ -101,28 +114,32 @@ defmodule GithubTags.Model.Repository do
   @doc """
   Add a tag by repository url
   """
-  @spec add_tag_by_url(String.t, String.t, String.t) :: String.t | {:ok, RepositorySchema.t}
+  @spec add_tag_by_url(String.t(), String.t(), String.t()) ::
+          String.t() | {:ok, RepositorySchema.t()}
   def add_tag_by_url(username, repository_url, tag) do
     case get_by_url(username, repository_url) do
       nil ->
         @repo_not_found
+
       repository ->
         add_tag(repository, tag)
     end
   end
+
   defp add_tag(repository, tag) do
     case repository.tags do
       nil ->
         repository
         |> change()
         |> put_change(:tags, [tag])
-        |> Repo.update
+        |> Repo.update()
+
       tags ->
         if !Enum.member?(tags, tag) do
           repository
           |> change()
           |> put_change(:tags, [tag | tags])
-          |> Repo.update
+          |> Repo.update()
         else
           {:ok, repository}
         end
@@ -132,22 +149,25 @@ defmodule GithubTags.Model.Repository do
   @doc """
   Remove a tag by repository url
   """
-  @spec remove_tag(String.t, String.t, String.t) :: String.t | {:ok, RepositorySchema.t}
+  @spec remove_tag(String.t(), String.t(), String.t()) :: String.t() | {:ok, RepositorySchema.t()}
   def remove_tag(username, repository_url, tag) do
     repository = get_by_url(username, repository_url)
+
     case repository.tags do
       nil ->
         @repo_not_found
+
       _tags ->
         remove_tag(repository, tag)
     end
   end
+
   defp remove_tag(repository, tag) do
     new_tag_list = List.delete(repository.tags, tag)
 
     repository
     |> change()
     |> put_change(:tags, new_tag_list)
-    |> Repo.update
+    |> Repo.update()
   end
 end

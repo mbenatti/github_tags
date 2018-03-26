@@ -1,5 +1,5 @@
 defmodule GithubTags.Schemas.User do
-  @moduledoc"""
+  @moduledoc """
   User Schema representing the 'users' Table in DB
   """
 
@@ -8,7 +8,7 @@ defmodule GithubTags.Schemas.User do
   @primary_key {:username, :string, []}
   @derive {Phoenix.Param, key: :username}
   schema "users" do
-    has_many :repositories, GithubTags.Schemas.Repository
+    has_many(:repositories, GithubTags.Schemas.Repository)
 
     timestamps()
   end

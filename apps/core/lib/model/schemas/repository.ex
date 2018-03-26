@@ -1,5 +1,5 @@
 defmodule GithubTags.Schemas.Repository do
-  @moduledoc"""
+  @moduledoc """
   Repository Schema representing the 'repositories' Table in DB
   """
 
@@ -8,13 +8,20 @@ defmodule GithubTags.Schemas.Repository do
   import Ecto.Changeset
 
   schema "repositories" do
-    field :name, :string
-    field :description, :string
-    field :language, :string
-    field :url, :string
+    field(:name, :string)
+    field(:description, :string)
+    field(:language, :string)
+    field(:url, :string)
 
-    field :tags, {:array, :string}
-    belongs_to :user_username, GithubTags.Schemas.User, foreign_key: :user, references: :username, type: :string
+    field(:tags, {:array, :string})
+
+    belongs_to(
+      :user_username,
+      GithubTags.Schemas.User,
+      foreign_key: :user,
+      references: :username,
+      type: :string
+    )
 
     timestamps()
   end

@@ -1,5 +1,5 @@
 defmodule GithubTags.Model.User do
-  @moduledoc"""
+  @moduledoc """
   Helper Module to interact with User Schema and Database
   """
 
@@ -21,7 +21,7 @@ defmodule GithubTags.Model.User do
       }
 
   """
-  @spec get_or_create_user(String.t) :: UserSchema.t
+  @spec get_or_create_user(String.t()) :: UserSchema.t()
   def get_or_create_user(username) do
     case Repo.get(UserSchema, username) do
       nil -> create_user(username)
@@ -32,7 +32,7 @@ defmodule GithubTags.Model.User do
   @doc """
   Get a user
   """
-  @spec get_user(String.t) :: UserSchema.t
+  @spec get_user(String.t()) :: UserSchema.t()
   def get_user(username) do
     Repo.get(UserSchema, username)
   end
@@ -40,7 +40,7 @@ defmodule GithubTags.Model.User do
   @doc """
   Get all users
   """
-  @spec get_users() :: [UserSchema.t]
+  @spec get_users() :: [UserSchema.t()]
   def get_users() do
     Repo.all(UserSchema)
   end
@@ -48,7 +48,7 @@ defmodule GithubTags.Model.User do
   @doc """
   Create an User Create na User
   """
-  @spec create_user(String.t) :: UserSchema.t | {:error, UserSchema.Changeset.t}
+  @spec create_user(String.t()) :: UserSchema.t() | {:error, UserSchema.Changeset.t()}
   def create_user(username) do
     case Repo.insert(%UserSchema{username: username}) do
       {:ok, schema} -> schema

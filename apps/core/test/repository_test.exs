@@ -4,7 +4,7 @@ defmodule GithubTags.RepositoryTest do
   alias GithubTags.Model.User
   alias GithubTags.Model.Repository
 
-  #This user is from a friend of mine, should be fine to test with it
+  # This user is from a friend of mine, should be fine to test with it
   @user "fabianopaes"
   @repo "https://github.com/akullpp/awesome-java"
   @tag_string "services"
@@ -52,7 +52,7 @@ defmodule GithubTags.RepositoryTest do
 
   describe "Tags manipulation" do
     test "add tag", %{user: user} do
-     {status, _repo} = Repository.add_tag_by_url(user.username, @repo, @tag_string)
+      {status, _repo} = Repository.add_tag_by_url(user.username, @repo, @tag_string)
 
       assert status == :ok
     end
@@ -64,8 +64,8 @@ defmodule GithubTags.RepositoryTest do
     end
 
     test "refute duplicate tag insert", %{user: user} do
-     Repository.add_tag_by_url(user.username, @repo, @tag_string)
-     {_status, repo} = Repository.add_tag_by_url(user.username, @repo, @tag_string)
+      Repository.add_tag_by_url(user.username, @repo, @tag_string)
+      {_status, repo} = Repository.add_tag_by_url(user.username, @repo, @tag_string)
 
       assert length(repo.tags) == length(Enum.uniq(repo.tags))
     end
@@ -78,5 +78,4 @@ defmodule GithubTags.RepositoryTest do
       assert @tag_string in repo.tags
     end
   end
-
 end

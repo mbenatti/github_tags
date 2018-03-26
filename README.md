@@ -1,12 +1,14 @@
 # GithubTags
 
+Pull GithHub repositories and group by Tags
+
 ## Warning
 
 Make sure that your IP are not rate-limited (https://developer.github.com/v3/#rate-limiting), otherwise you can't run the project properly
 
 ## Context
 
-Github provides a lot a feature to "star" a project, but its not possible to group them or add tags
+Github provides a feature to "star" a project, but its not possible to group them or add tags
 
 ### The project
 

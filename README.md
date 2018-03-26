@@ -12,8 +12,8 @@ Github provides a feature to "star" a project, but its not possible to group the
 
 ### The project
 
-The project is a umbrella app, containing three apps: core, api and ui
-The UI runs on port 4000 and API runs on 4002
+The project is a umbrella app, containing three apps: core, api and ui.
+The UI runs on port 4000 and API runs on 4002.
 
 ----
 

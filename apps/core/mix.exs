@@ -26,7 +26,8 @@ defmodule GithubTags.Core.MixProject do
     [
       {:tentacat, "~> 0.8.0"},
       {:postgrex, "~> 0.13.5"},
-      {:ecto, "~> 2.2"}
+      {:ecto, "~> 2.2"},
+      {:phoenix, "~> 1.3.0"}
     ]
   end
 end

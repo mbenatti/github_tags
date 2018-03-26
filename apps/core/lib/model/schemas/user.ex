@@ -8,7 +8,11 @@ defmodule GithubTags.Schemas.User do
   @primary_key {:username, :string, []}
   @derive {Phoenix.Param, key: :username}
   schema "users" do
-    has_many(:repositories, GithubTags.Schemas.Repository)
+    has_many(
+      :repositories,
+      GithubTags.Schemas.Repository,
+      foreign_key: :user
+    )
 
     timestamps()
   end

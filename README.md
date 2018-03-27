@@ -28,11 +28,11 @@ Dependencies:
 
 #### Get Dependencies
 
-  * `mix ecto.get`
+  * `mix deps.get`
 
 #### Compile
 
-  * `mix ecto.compile`
+  * `mix compile`
 
 #### Create a Database
 
